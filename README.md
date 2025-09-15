@@ -34,18 +34,16 @@ The application follows a standard client-server model. The frontend captures us
 
 (You can add an architecture diagram here in the docs/ folder and link it)
 
-# Tech Stack:
-<details>
-<summary><strong>Option 2: Node.js Backend (Full-Stack JavaScript)</strong></summary>
+# Tech Stack: Node.js Backend (Full-Stack JavaScript)
 
-Component	Technology	Rationale
-Frontend	React.js, OpenLayers, Material-UI	A unified JavaScript ecosystem simplifies development and team workflow.
-Backend	Node.js (Express.js)	High-performance, non-blocking I/O is excellent for handling concurrent API requests to data sources.
-Key Libraries	Danfo.js, Turf.js, Axios	Modern JS libraries for data manipulation (Danfo.js) and geospatial analysis (Turf.js).
-Database	PostgreSQL + PostGIS	Remains the best choice for storing and querying the project's complex geospatial data.
-Data Sources	ISRO Bhuvan (WMS), IMD, CGWB	Same data integration strategy, using Axios for live WMS queries and a PostGIS DB for cached data.
+| Component     | Technology                              | Rationale                                                                 |
+|--------------|------------------------------------------|---------------------------------------------------------------------------|
+| UI           | React.js, OpenLayers, Material-UI        | A unified JavaScript ecosystem simplifies development and team workflow. |
+| Backend       | Node.js (Express.js)                    | High-performance, non-blocking I/O is excellent for handling concurrent API requests to data sources. |
+| Data Handling | Danfo.js, Turf.js, Axios                | Modern JS libraries for data manipulation (Danfo.js) and spatial features (Turf.js). |
+| Database      | PostgreSQL + PostGIS                    | Remains the best choice for storing and querying the complex geospatial data. |
+| Data Sources  | ISRO Bhuvan (WMS), IMD, CGWB            | Same data integration strategy, using Axios for live WMS queries and a PostgreSQL DB for cached data. |
 
-</details>
 
 🏁 Getting Started & Local Setup
 Follow these steps to set up and run the project on your local machine.
@@ -55,21 +53,29 @@ Follow these steps to set up and run the project on your local machine.
 Bash
 
 git clone https://github.com/your-username/JalSarathi.git
+
 cd JalSarathi
+
 2. Setup the Backend:
 
 Bash
+
 cd backend
 
 npm install
+
 npm start
 
 3. Setup the Frontend:
+   
 Bash
 
 cd frontend
+
 npm install
+
 npm start
+
 The application should now be running on http://localhost:3000.
 
 🤝 How to Contribute
