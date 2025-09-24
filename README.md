@@ -96,7 +96,3 @@ India Meteorological Department (IMD): For historical and gridded rainfall data.
 ISRO's Bhuvan Platform: For providing rich thematic geospatial data via OGC services.   
 
 National Institute of Hydrology (NIH): For foundational research on artificial recharge practices.   
-
-
-Sources and related content
-my name is aditya
