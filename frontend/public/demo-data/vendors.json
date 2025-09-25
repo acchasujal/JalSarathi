@@ -1,0 +1,36 @@
+{
+  "vendors": [
+    {
+      "id": 1,
+      "name": "WaterTech Solutions",
+      "cities": ["Delhi", "Gurgaon", "Noida"],
+      "specialization": "Urban RWH Systems",
+      "rating": 4.5,
+      "contact": "+91-9876543210"
+    },
+    {
+      "id": 2,
+      "name": "EcoHarvest India",
+      "cities": ["Mumbai", "Pune", "Thane"],
+      "specialization": "Commercial RWH",
+      "rating": 4.3,
+      "contact": "+91-9876543211"
+    },
+    {
+      "id": 3,
+      "name": "GreenWater Systems",
+      "cities": ["Bangalore", "Chennai", "Hyderabad"],
+      "specialization": "Smart RWH Solutions",
+      "rating": 4.7,
+      "contact": "+91-9876543212"
+    },
+    {
+      "id": 4,
+      "name": "RuralWater Foundation",
+      "cities": ["Dehradun", "Shimla", "Ranchi"],
+      "specialization": "Rural Water Solutions",
+      "rating": 4.6,
+      "contact": "+91-9876543213"
+    }
+  ]
+}

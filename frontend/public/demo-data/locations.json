@@ -1,0 +1,184 @@
+{
+  "cities": [
+    {
+      "id": 1,
+      "name": "Delhi",
+      "state": "Delhi",
+      "rainfall_mm": 800,
+      "type": "urban",
+      "water_cost_per_liter": 0.05,
+      "subsidy_schemes": ["Jal Shakti Abhiyan", "Smart City Mission"]
+    },
+    {
+      "id": 2,
+      "name": "Mumbai",
+      "state": "Maharashtra",
+      "rainfall_mm": 2200,
+      "type": "urban",
+      "water_cost_per_liter": 0.06,
+      "subsidy_schemes": ["AMRUT", "Smart City Mission"]
+    },
+    {
+      "id": 3,
+      "name": "Chennai",
+      "state": "Tamil Nadu",
+      "rainfall_mm": 1400,
+      "type": "urban",
+      "water_cost_per_liter": 0.04,
+      "subsidy_schemes": ["Jal Shakti Abhiyan", "AMRUT"]
+    },
+    {
+      "id": 4,
+      "name": "Bangalore",
+      "state": "Karnataka",
+      "rainfall_mm": 970,
+      "type": "urban",
+      "water_cost_per_liter": 0.055,
+      "subsidy_schemes": ["Smart City Mission"]
+    },
+    {
+      "id": 5,
+      "name": "Kolkata",
+      "state": "West Bengal",
+      "rainfall_mm": 1800,
+      "type": "urban",
+      "water_cost_per_liter": 0.045,
+      "subsidy_schemes": ["AMRUT", "Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 6,
+      "name": "Hyderabad",
+      "state": "Telangana",
+      "rainfall_mm": 800,
+      "type": "urban",
+      "water_cost_per_liter": 0.05,
+      "subsidy_schemes": ["Smart City Mission"]
+    },
+    {
+      "id": 7,
+      "name": "Pune",
+      "state": "Maharashtra",
+      "rainfall_mm": 750,
+      "type": "urban",
+      "water_cost_per_liter": 0.052,
+      "subsidy_schemes": ["AMRUT"]
+    },
+    {
+      "id": 8,
+      "name": "Ahmedabad",
+      "state": "Gujarat",
+      "rainfall_mm": 800,
+      "type": "urban",
+      "water_cost_per_liter": 0.048,
+      "subsidy_schemes": ["Smart City Mission"]
+    },
+    {
+      "id": 9,
+      "name": "Jaipur",
+      "state": "Rajasthan",
+      "rainfall_mm": 600,
+      "type": "urban",
+      "water_cost_per_liter": 0.06,
+      "subsidy_schemes": ["Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 10,
+      "name": "Lucknow",
+      "state": "Uttar Pradesh",
+      "rainfall_mm": 900,
+      "type": "urban",
+      "water_cost_per_liter": 0.047,
+      "subsidy_schemes": ["AMRUT", "Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 11,
+      "name": "Dehradun",
+      "state": "Uttarakhand",
+      "rainfall_mm": 2100,
+      "type": "rural",
+      "water_cost_per_liter": 0.035,
+      "subsidy_schemes": ["MGNREGA", "Watershed Development"]
+    },
+    {
+      "id": 12,
+      "name": "Shimla",
+      "state": "Himachal Pradesh",
+      "rainfall_mm": 1500,
+      "type": "rural",
+      "water_cost_per_liter": 0.038,
+      "subsidy_schemes": ["PMKSY", "Watershed Development"]
+    },
+    {
+      "id": 13,
+      "name": "Guwahati",
+      "state": "Assam",
+      "rainfall_mm": 1800,
+      "type": "urban",
+      "water_cost_per_liter": 0.042,
+      "subsidy_schemes": ["Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 14,
+      "name": "Bhopal",
+      "state": "Madhya Pradesh",
+      "rainfall_mm": 1200,
+      "type": "urban",
+      "water_cost_per_liter": 0.049,
+      "subsidy_schemes": ["AMRUT"]
+    },
+    {
+      "id": 15,
+      "name": "Patna",
+      "state": "Bihar",
+      "rainfall_mm": 1100,
+      "type": "urban",
+      "water_cost_per_liter": 0.046,
+      "subsidy_schemes": ["Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 16,
+      "name": "Bhubaneswar",
+      "state": "Odisha",
+      "rainfall_mm": 1500,
+      "type": "urban",
+      "water_cost_per_liter": 0.043,
+      "subsidy_schemes": ["Smart City Mission"]
+    },
+    {
+      "id": 17,
+      "name": "Chandigarh",
+      "state": "Chandigarh",
+      "rainfall_mm": 1100,
+      "type": "urban",
+      "water_cost_per_liter": 0.055,
+      "subsidy_schemes": ["Smart City Mission", "Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 18,
+      "name": "Ranchi",
+      "state": "Jharkhand",
+      "rainfall_mm": 1400,
+      "type": "urban",
+      "water_cost_per_liter": 0.044,
+      "subsidy_schemes": ["AMRUT"]
+    },
+    {
+      "id": 19,
+      "name": "Thiruvananthapuram",
+      "state": "Kerala",
+      "rainfall_mm": 1800,
+      "type": "urban",
+      "water_cost_per_liter": 0.041,
+      "subsidy_schemes": ["Jal Shakti Abhiyan"]
+    },
+    {
+      "id": 20,
+      "name": "Gandhinagar",
+      "state": "Gujarat",
+      "rainfall_mm": 800,
+      "type": "urban",
+      "water_cost_per_liter": 0.051,
+      "subsidy_schemes": ["Smart City Mission"]
+    }
+  ]
+}
