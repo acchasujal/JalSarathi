@@ -1,0 +1,27 @@
+{
+  "name": "jalsarathi-backend",
+  "version": "1.0.0",
+  "description": "Backend API for JalSarathi water management system",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "test": "jest",
+    "seed": "node scripts/seedData.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "sqlite3": "^5.1.6",
+    "pdfkit": "^0.14.0",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.8.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.0",
+    "supertest": "^6.3.0"
+  },
+  "keywords": ["water", "sustainability", "hackathon", "jalsarathi"],
+  "author": "JalSarathi Team",
+  "license": "MIT"
+}
