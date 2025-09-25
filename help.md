@@ -199,5 +199,3 @@ git push origin feature/rainwater-calculator
 # Create Pull Request → Review → Merge to main
 ✅ Final Implementation Checklist
 
-
-First commit.
