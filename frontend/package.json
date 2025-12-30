@@ -16,12 +16,14 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.545.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "react-scroll": "^1.9.3",
+    "recharts": "^3.2.1",
     "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
