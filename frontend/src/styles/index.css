@@ -1,15 +1,11 @@
-/* ------------------------------------------------------
-   🌊 JalSarathi Global Styles (Tailwind + Custom Enhancements)
-   Author: You (with ❤️ from ChatGPT)
-------------------------------------------------------- */
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Import Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ----------------------------------------------
    🌈 Root Variables (Theme Colors)
