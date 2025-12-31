@@ -1,7 +1,7 @@
 // backend/routes/rainwater.js
 import express from "express";
 import { calculateRainwaterHarvesting } from "../services/rainwaterservice.js"; // ✅ lowercase file name
-import { generateRainwaterPDF } from "../utils/pdfGenerator.js"; // optional
+import { generateRainwaterPDF } from "../utils/pdfgenerator.js"; // optional
 import { jalsarathiDB } from "../config/database.js";
 
 const router = express.Router();
