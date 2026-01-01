@@ -4,46 +4,81 @@
 JalSarathi is an open-source web application for on-the-spot assessment of Rooftop Rainwater Harvesting (RTRWH) and Artificial Recharge (AR) potential in India. It transforms complex geospatial and hydrological data into simple, actionable insights for every citizen.
 
 🚀([JalSarathi](https://jal-sarathi.vercel.app/))
-The Problem 🏜️
-India is facing a critical groundwater crisis, with aquifers depleting at an alarming rate. While the government provides a wealth of scientific data on water conservation, it remains locked in complex reports, inaccessible to the general public. This "Information-Action" gap prevents widespread citizen participation in vital water-saving initiatives.
 
-The Solution ✨
-JalSarathi bridges this gap. It is a digital public utility that empowers every individual to become a water warrior. By simply providing a location, users get a comprehensive, scientifically-backed report on their property's water harvesting potential, helping them make informed decisions to conserve water and secure their future.
+🌍 The Problem
 
-Key Features 🎯
+India faces a growing groundwater crisis due to over-extraction, urbanization, and erratic rainfall.
+Although rainwater harvesting is mandated or recommended in many regions, citizens lack easy tools to understand:
 
-📍 On-the-Spot GIS-Based Assessment: Get an instant analysis of your location's potential using real-time geospatial data.
+How much rainwater they can realistically harvest
+Whether it is financially viable
+How much of their household water demand it can meet
 
-💧 Dual Potential Analysis: Calculates potential for both Rooftop Rainwater Harvesting (RTRWH) and Artificial Recharge (AR) from open spaces.
+✨ The Solution
 
-🔬 Automated Feasibility Check: Automatically checks for critical parameters like soil permeability, land slope, and groundwater depth to determine site suitability for AR.   
+JalSarathi bridges this gap by providing a simple, location-aware calculator that estimates:
+Annual harvestable rainwater
+Potential cost savings
+Payback period of a rainwater harvesting system
+Percentage of household demand met
+Subsidy-adjusted system cost
+All calculations are tailored to Indian cities and standards.
 
-🏗️ Intelligent Structure Recommendations: Suggests the most appropriate type of structure (e.g., Recharge Pit, Storage Tank) with recommended dimensions tailored to your site's conditions.   
+🎯 Current Features (Implemented)
 
-💰 Cost & Benefit Analysis: Provides an estimated cost for the proposed structure and a clear analysis of potential water and monetary savings.
+📍 City-wise Rainfall Estimation
+Uses predefined Indian city rainfall averages as a reliable baseline.
+🏠 Rooftop-Based Calculation
+Considers rooftop area, roof material, household size, and location type.
+💧 Annual Harvest Potential
+Calculates total harvestable rainwater using standard runoff coefficients.
+💰 Cost & Payback Analysis
+Estimates system cost, annual savings, subsidy benefits, and payback period.
+📊 Interactive Visualizations
+Bar charts, pie charts, and comparison graphs for better understanding.
+📄 Downloadable PDF Report
+Generates a structured rainwater assessment report.
 
-📜 Policy-Aware Guidance: Informs users about local and state-level rainwater harvesting mandates and incentives.   
+🌐 Full-Stack Deployment
 
-🌐 Multi-Lingual Support: Designed to be accessible to diverse communities across India.
+Frontend: Vercel
+Backend API: Render
 
-🛠️ Technology Stack & Architecture
-JalSarathi is built using a modern, scalable tech stack. The architecture is designed to be robust, ensuring that the application can handle complex geospatial queries efficiently.
+🛠️ Tech Stack
+Frontend:
+React (Vite)
+Tailwind CSS
+Recharts
+Framer Motion
+Axios
 
-Architecture Overview
-The application follows a standard client-server model. The frontend captures user inputs, the backend orchestrates data from multiple sources, performs the analysis, and returns a comprehensive report.
+Backend:
+Node.js + Express
+SQLite (for assessment logging)
+PDFKit (report generation)
 
-(You can add an architecture diagram here in the docs/ folder and link it)
+Deployment:
+Frontend: Vercel
+Backend: Render
 
-# Tech Stack: Node.js Backend (Full-Stack JavaScript)
+🧠 Architecture Overview
 
-| Component     | Technology                              | Rationale                                                                 |
-|--------------|------------------------------------------|---------------------------------------------------------------------------|
-| UI           | React.js, OpenLayers, Material-UI        | A unified JavaScript ecosystem simplifies development and team workflow. |
-| Backend       | Node.js (Express.js)                    | High-performance, non-blocking I/O is excellent for handling concurrent API requests to data sources. |
-| Data Handling | Danfo.js, Turf.js, Axios                | Modern JS libraries for data manipulation (Danfo.js) and spatial features (Turf.js). |
-| Database      | PostgreSQL + PostGIS                    | Remains the best choice for storing and querying the complex geospatial data. |
-| Data Sources  | ISRO Bhuvan (WMS), IMD, CGWB            | Same data integration strategy, using Axios for live WMS queries and a PostgreSQL DB for cached data. |
+React frontend collects user inputs
+Backend REST API performs calculations
+Results returned as JSON
+Charts rendered client-side
+PDF generated server-side
 
+🚧 Roadmap / Planned Enhancements
+
+These features are planned but not yet implemented:
+🌧️ Live rainfall data from IMD / Open-Meteo
+🗺️ GIS-based analysis using OpenLayers
+💧 Artificial groundwater recharge estimation
+📜 State-wise subsidy & policy mapping
+🗣️ Multi-lingual support
+🧮 Advanced feasibility checks (soil, slope, aquifer depth)
+🗄️ Migration to PostgreSQL + PostGIS
 
 🏁 Getting Started & Local Setup
 Follow these steps to set up and run the project on your local machine.
@@ -53,7 +88,6 @@ Follow these steps to set up and run the project on your local machine.
 Bash
 
 git clone https://github.com/acchasujal/JalSarathi.git
-
 cd JalSarathi
 
 2. Setup the Backend:
@@ -61,9 +95,7 @@ cd JalSarathi
 Bash
 
 cd backend
-
 npm install
-
 npm start
 
 3. Setup the Frontend:
@@ -71,9 +103,7 @@ npm start
 Bash
 
 cd frontend
-
 npm install
-
 npm run dev
 
 The application should now be running on http://localhost:3000.
