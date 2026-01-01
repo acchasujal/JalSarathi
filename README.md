@@ -11,75 +11,109 @@ India faces a growing groundwater crisis due to over-extraction, urbanization, a
 Although rainwater harvesting is mandated or recommended in many regions, citizens lack easy tools to understand:
 
 How much rainwater they can realistically harvest
+
 Whether it is financially viable
+
 How much of their household water demand it can meet
 
 ✨ The Solution
 
 JalSarathi bridges this gap by providing a simple, location-aware calculator that estimates:
+
 Annual harvestable rainwater
+
 Potential cost savings
+
 Payback period of a rainwater harvesting system
+
 Percentage of household demand met
+
 Subsidy-adjusted system cost
+
 All calculations are tailored to Indian cities and standards.
 
 🎯 Current Features (Implemented)
 
 📍 City-wise Rainfall Estimation
 Uses predefined Indian city rainfall averages as a reliable baseline.
+
 🏠 Rooftop-Based Calculation
 Considers rooftop area, roof material, household size, and location type.
+
 💧 Annual Harvest Potential
 Calculates total harvestable rainwater using standard runoff coefficients.
+
 💰 Cost & Payback Analysis
 Estimates system cost, annual savings, subsidy benefits, and payback period.
+
 📊 Interactive Visualizations
 Bar charts, pie charts, and comparison graphs for better understanding.
+
 📄 Downloadable PDF Report
 Generates a structured rainwater assessment report.
 
 🌐 Full-Stack Deployment
 
 Frontend: Vercel
+
 Backend API: Render
 
 🛠️ Tech Stack
-Frontend:
+Frontend
+
 React (Vite)
+
 Tailwind CSS
+
 Recharts
+
 Framer Motion
+
 Axios
 
-Backend:
+Backend
+
 Node.js + Express
+
 SQLite (for assessment logging)
+
 PDFKit (report generation)
 
-Deployment:
+Deployment
+
 Frontend: Vercel
+
 Backend: Render
 
 🧠 Architecture Overview
 
 React frontend collects user inputs
+
 Backend REST API performs calculations
+
 Results returned as JSON
+
 Charts rendered client-side
+
 PDF generated server-side
 
 🚧 Roadmap / Planned Enhancements
 
 These features are planned but not yet implemented:
-🌧️ Live rainfall data from IMD / Open-Meteo
-🗺️ GIS-based analysis using OpenLayers
-💧 Artificial groundwater recharge estimation
-📜 State-wise subsidy & policy mapping
-🗣️ Multi-lingual support
-🧮 Advanced feasibility checks (soil, slope, aquifer depth)
-🗄️ Migration to PostgreSQL + PostGIS
 
+🌧️ Live rainfall data from IMD / Open-Meteo
+
+🗺️ GIS-based analysis using OpenLayers
+
+💧 Artificial groundwater recharge estimation
+
+📜 State-wise subsidy & policy mapping
+
+🗣️ Multi-lingual support
+
+🧮 Advanced feasibility checks (soil, slope, aquifer depth)
+
+🗄️ Migration to PostgreSQL + PostGIS
 🏁 Getting Started & Local Setup
 Follow these steps to set up and run the project on your local machine.
 
@@ -88,6 +122,7 @@ Follow these steps to set up and run the project on your local machine.
 Bash
 
 git clone https://github.com/acchasujal/JalSarathi.git
+
 cd JalSarathi
 
 2. Setup the Backend:
@@ -95,7 +130,9 @@ cd JalSarathi
 Bash
 
 cd backend
+
 npm install
+
 npm start
 
 3. Setup the Frontend:
@@ -103,7 +140,9 @@ npm start
 Bash
 
 cd frontend
+
 npm install
+
 npm run dev
 
 The application should now be running on http://localhost:3000.
