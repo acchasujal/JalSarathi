@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { WaterProvider } from "./context/WaterContext"; // ✅ import this
 import "./styles/index.css";
-import "./styles/app.css";
+import "./styles/App.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
