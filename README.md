@@ -3,7 +3,7 @@
 
 JalSarathi is an open-source web application for on-the-spot assessment of Rooftop Rainwater Harvesting (RTRWH) and Artificial Recharge (AR) potential in India. It transforms complex geospatial and hydrological data into simple, actionable insights for every citizen.
 
-🚀(https://jalsarathi.yourdomain.com)
+🚀([https://jalsarathi.yourdomain.com](https://jal-sarathi.vercel.app/))
 The Problem 🏜️
 India is facing a critical groundwater crisis, with aquifers depleting at an alarming rate. While the government provides a wealth of scientific data on water conservation, it remains locked in complex reports, inaccessible to the general public. This "Information-Action" gap prevents widespread citizen participation in vital water-saving initiatives.
 
@@ -52,7 +52,7 @@ Follow these steps to set up and run the project on your local machine.
 
 Bash
 
-git clone https://github.com/your-username/JalSarathi.git
+git clone https://github.com/acchasujal/JalSarathi.git
 
 cd JalSarathi
 
@@ -74,7 +74,7 @@ cd frontend
 
 npm install
 
-npm start
+npm run dev
 
 The application should now be running on http://localhost:3000.
 
