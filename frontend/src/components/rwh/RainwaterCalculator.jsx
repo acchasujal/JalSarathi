@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ResultsDisplay from "./ResultsDisplay";
+import {
+  getDemoLocations,
+  calculateRainwater,
+  generatePDF,
+} from "../../services/api";
 
 const RainwaterCalculator = () => {
   const [form, setForm] = useState({
@@ -11,12 +16,12 @@ const RainwaterCalculator = () => {
     locationType: "urban",
   });
 
+  const [locations, setLocations] = useState([]);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [locations, setLocations] = useState([]);
 
-  // ✅ Hardcoded rainfall data (matches backend rainwater.js)
+  // Fallback (must match backend)
   const fallbackLocations = [
     { id: 1, name: "Delhi", rainfall: 800, type: "urban" },
     { id: 2, name: "Mumbai", rainfall: 2200, type: "urban" },
@@ -30,19 +35,24 @@ const RainwaterCalculator = () => {
     { id: 10, name: "Shimla", rainfall: 1500, type: "rural" },
   ];
 
-  // ✅ Fetch demo locations from backend or use fallback
+  // Load cities
   useEffect(() => {
-    const fetchLocations = async () => {
+    const loadLocations = async () => {
       try {
-        const res = await fetch("/api/rainwater/demo-locations");
-        const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) setLocations(data);
-        else setLocations(fallbackLocations);
-      } catch {
+        const data = await getDemoLocations();
+        if (Array.isArray(data) && data.length > 0) {
+          setLocations(data);
+          setForm((prev) => ({ ...prev, location: data[0].name }));
+        } else {
+          setLocations(fallbackLocations);
+        }
+      } catch (err) {
+        console.warn("Using fallback city data");
         setLocations(fallbackLocations);
       }
     };
-    fetchLocations();
+
+    loadLocations();
   }, []);
 
   const handleChange = (e) => {
@@ -51,8 +61,8 @@ const RainwaterCalculator = () => {
   };
 
   const handleCalculate = async () => {
-    if (!form.rooftopArea) {
-      alert("Please enter your rooftop area before calculating.");
+    if (!form.rooftopArea || Number(form.rooftopArea) <= 0) {
+      alert("Please enter a valid rooftop area");
       return;
     }
 
@@ -61,19 +71,17 @@ const RainwaterCalculator = () => {
     setResults(null);
 
     try {
-      const response = await fetch("/api/rainwater/calculate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const payload = {
+        ...form,
+        rooftopArea: Number(form.rooftopArea),
+        householdMembers: Number(form.householdMembers),
+      };
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Calculation failed");
-
-      setResults(data.data);
+      const response = await calculateRainwater(payload);
+      setResults(response.data);
     } catch (err) {
-      console.error("Error calculating:", err);
-      setError(err.message);
+      console.error(err);
+      setError(err.message || "Calculation failed");
     } finally {
       setLoading(false);
     }
@@ -81,27 +89,23 @@ const RainwaterCalculator = () => {
 
   const handleGeneratePDF = async (assessmentData) => {
     try {
-      const response = await fetch("/api/rainwater/generate-pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ assessmentData }),
-      });
+      const blob = await generatePDF(assessmentData);
+      const url = URL.createObjectURL(blob);
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
       link.download = "jalsarathi-report.pdf";
       link.click();
-    } catch (err) {
-      console.error("PDF generation failed:", err);
+
+      URL.revokeObjectURL(url);
+    } catch {
       alert("Failed to generate PDF");
     }
   };
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      {/* Left: Form */}
+      {/* LEFT: FORM */}
       <motion.div
         className="jalsarathi-card p-6"
         initial={{ opacity: 0, y: 15 }}
@@ -117,7 +121,7 @@ const RainwaterCalculator = () => {
           name="location"
           value={form.location}
           onChange={handleChange}
-          className="w-full mb-4 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"
+          className="w-full mb-4 p-2 border rounded-lg"
         >
           {locations.map((loc) => (
             <option key={loc.id} value={loc.name}>
@@ -132,8 +136,7 @@ const RainwaterCalculator = () => {
           name="rooftopArea"
           value={form.rooftopArea}
           onChange={handleChange}
-          className="w-full mb-4 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"
-          placeholder="Enter rooftop size"
+          className="w-full mb-4 p-2 border rounded-lg"
         />
 
         <div className="grid grid-cols-2 gap-4">
@@ -143,30 +146,32 @@ const RainwaterCalculator = () => {
               name="buildingType"
               value={form.buildingType}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"
+              className="w-full p-2 border rounded-lg"
             >
               <option value="concrete">🏠 Concrete Roof</option>
-              <option value="tile">🧱 Tile Roof</option>
+              <option value="tiled">🧱 Tiled Roof</option>
               <option value="metal">🏗️ Metal Roof</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">Household Members</label>
+            <label className="block text-gray-700 mb-1">
+              Household Members
+            </label>
             <input
               type="number"
               name="householdMembers"
+              min="1"
               value={form.householdMembers}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400"
-              min="1"
+              className="w-full p-2 border rounded-lg"
             />
           </div>
         </div>
 
         <div className="mt-4">
           <label className="block text-gray-700 mb-1">Area Type</label>
-          <div className="flex gap-4 text-gray-700">
+          <div className="flex gap-4">
             {["urban", "rural"].map((type) => (
               <label key={type}>
                 <input
@@ -176,7 +181,7 @@ const RainwaterCalculator = () => {
                   checked={form.locationType === type}
                   onChange={handleChange}
                 />{" "}
-                {type.charAt(0).toUpperCase() + type.slice(1)}
+                {type}
               </label>
             ))}
           </div>
@@ -185,17 +190,17 @@ const RainwaterCalculator = () => {
         <button
           onClick={handleCalculate}
           disabled={loading || !form.rooftopArea}
-          className={`mt-6 w-full py-2 rounded-lg font-medium text-white transition-all ${
-            loading || !form.rooftopArea
+          className={`mt-6 w-full py-2 rounded-lg text-white transition ${
+            loading
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 shadow-md hover:shadow-lg"
+              : "bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600"
           }`}
         >
           {loading ? "Calculating..." : "💧 Calculate Rainwater Potential"}
         </button>
       </motion.div>
 
-      {/* Right: Results */}
+      {/* RIGHT: RESULTS */}
       <ResultsDisplay
         assessment={results}
         loading={loading}
@@ -207,6 +212,8 @@ const RainwaterCalculator = () => {
 };
 
 export default RainwaterCalculator;
+
+
 
 
 
