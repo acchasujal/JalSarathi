@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Droplet, Menu, X, LayoutDashboard, Calculator, Sparkles } from "lucide-react";
+import { Droplet, Menu, X, LayoutDashboard, Calculator, Sparkles, Store } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GuidedTour from "../common/GuidedTour";
 
