@@ -92,17 +92,18 @@ const GuidedTour = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-sky-100"
+          className="relative bg-white rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md max-h-[90vh] overflow-hidden border border-sky-100 flex flex-col m-4"
         >
-          <div className="p-8">
+          {/* Scrollable Content */}
+          <div className="p-6 sm:p-8 flex-grow overflow-y-auto custom-scrollbar">
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-10"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex flex-col items-center text-center gap-6">
+            <div className="flex flex-col items-center text-center gap-6 mt-4">
               <motion.div
                 key={currentStep}
                 initial={{ scale: 0.5, opacity: 0 }}
@@ -112,17 +113,22 @@ const GuidedTour = ({ isOpen, onClose }) => {
                 {steps[currentStep].icon}
               </motion.div>
 
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-gray-900">
+              <div className="space-y-3">
+                <h3 className="text-xl font-extrabold text-gray-900 tracking-tight">
                   {steps[currentStep].title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
+                <p className="text-gray-600 leading-relaxed text-base">
                   {steps[currentStep].description}
                 </p>
               </div>
+            </div>
+          </div>
 
+          {/* Fixed Footer Controls */}
+          <div className="p-6 sm:p-8 pt-0 border-t border-gray-50 bg-white/50 backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-6">
               {/* Progress Dots */}
-              <div className="flex gap-1.5 mt-2">
+              <div className="flex gap-1.5">
                 {steps.map((_, i) => (
                   <div
                     key={i}
@@ -134,7 +140,7 @@ const GuidedTour = ({ isOpen, onClose }) => {
               </div>
 
               {/* Controls */}
-              <div className="flex items-center justify-between w-full mt-4">
+              <div className="flex items-center justify-between w-full">
                 <button
                   onClick={prevStep}
                   disabled={currentStep === 0}
@@ -147,10 +153,10 @@ const GuidedTour = ({ isOpen, onClose }) => {
 
                 <button
                   onClick={nextStep}
-                  className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2.5 rounded-xl font-semibold flex items-center gap-2 transition-all shadow-md shadow-sky-100 active:scale-95"
+                  className="bg-sky-600 hover:bg-sky-700 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-sky-100 active:scale-95 group"
                 >
                   {currentStep === steps.length - 1 ? "Finish" : "Next"}
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
             </div>

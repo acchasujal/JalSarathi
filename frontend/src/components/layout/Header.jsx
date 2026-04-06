@@ -11,6 +11,8 @@ const Header = () => {
 
   const navLinks = [
     { path: "/", label: "Water Calculator", icon: <Calculator className="w-4 h-4" /> },
+    { path: "/vendors", label: "Vendors", icon: <Store className="w-4 h-4" /> },
+    { path: "/subsidies", label: "Subsidies", icon: <Sparkles className="w-4 h-4" /> },
   ];
 
   return (
@@ -34,7 +36,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-2">
+          <nav className="hidden md:flex items-center gap-3">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -53,7 +55,7 @@ const Header = () => {
             {/* Guide Me Button */}
             <button
               onClick={() => setTourOpen(true)}
-              className="ml-4 flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl font-medium shadow-md shadow-sky-100 hover:bg-sky-700 transition-all active:scale-95"
+              className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl font-medium shadow-md shadow-sky-100 hover:bg-sky-700 transition-all active:scale-95"
             >
               <Sparkles className="w-4 h-4" />
               Guide Me
@@ -77,15 +79,15 @@ const Header = () => {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden bg-white border-t border-gray-100 shadow-sm"
+            className="md:hidden bg-white border-t border-gray-100 shadow-xl overflow-hidden"
           >
-            <div className="px-4 py-3 space-y-2">
+            <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition ${
                     location.pathname === link.path
                       ? "bg-blue-100 text-blue-700 font-medium"
                       : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
@@ -95,6 +97,17 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
+
+              <button
+                onClick={() => {
+                  setTourOpen(true);
+                  setMobileOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 bg-sky-600 text-white rounded-xl font-bold shadow-lg shadow-sky-100 active:scale-[0.98] transition-all"
+              >
+                <Sparkles className="w-4 h-4" />
+                Guide Me (Tutorial)
+              </button>
             </div>
           </motion.div>
         )}
