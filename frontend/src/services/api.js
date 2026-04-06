@@ -44,4 +44,13 @@ export const getAdminStats = async () => {
   return res.data;
 };
 
+// Admin CRUD
+export const getVendors = async () => (await api.get("/api/admin/vendors")).data;
+export const addVendor = async (data) => (await api.post("/api/admin/vendors", data)).data;
+export const deleteVendor = async (id) => (await api.delete(`/api/admin/vendors/${id}`)).data;
+
+export const getLocations = async () => (await api.get("/api/admin/locations")).data;
+export const addLocation = async (data) => (await api.post("/api/admin/locations", data)).data;
+export const deleteLocation = async (id) => (await api.delete(`/api/admin/locations/${id}`)).data;
+
 export default api;

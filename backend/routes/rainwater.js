@@ -56,21 +56,27 @@ router.post("/calculate", async (req, res) => {
       buildingType,
       householdMembers,
       locationType,
+      latitude,   // ← exact float from map pin
+      longitude,  // ← exact float from map pin
     } = req.body;
+
+    console.log('\n[rainwater.js] ▶ POST /calculate received:', JSON.stringify(req.body, null, 2));
 
     if (!location || !rooftopArea || !buildingType) {
       return res.status(400).json({
         success: false,
-        error:
-          "Missing required fields: location, rooftopArea, buildingType",
+        error: "Missing required fields: location, rooftopArea, buildingType",
       });
     }
 
-    // Find rainfall for selected location from demo data
-    const locationData = demoLocations.find(
-      (l) => l.name.toLowerCase() === location.toLowerCase()
-    );
-    const rainfall = locationData ? locationData.rainfall : 1000; // fallback
+    // Only fall back to demo-locations lookup when we don't have precise coords
+    let fallbackRainfall = 1000;
+    if (!latitude || !longitude) {
+      const locationData = demoLocations.find(
+        (l) => l.name.toLowerCase() === location.toLowerCase()
+      );
+      if (locationData) fallbackRainfall = locationData.rainfall;
+    }
 
     const cleanData = {
       location,
@@ -78,8 +84,15 @@ router.post("/calculate", async (req, res) => {
       buildingType,
       householdMembers: parseInt(householdMembers) || 4,
       locationType: locationType || "urban",
-      rainfall,
+      rainfall: fallbackRainfall,
+      // Pass exact coords through to the service
+      ...(latitude !== undefined && latitude !== null && {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+      }),
     };
+
+    console.log('[rainwater.js] cleanData being sent to service:', JSON.stringify(cleanData));
 
     // Perform calculation
     const result = await calculateRainwaterHarvesting(cleanData);

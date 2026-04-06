@@ -1,6 +1,8 @@
 // frontend/src/components/Rainwater/CalculatorForm.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { MapPin } from "lucide-react";
+import MapLocationPicker from "../common/MapLocationPicker";
 
 const CalculatorForm = ({ onSubmit, loading }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const CalculatorForm = ({ onSubmit, loading }) => {
   });
   const [cities, setCities] = useState([]);
   const [errors, setErrors] = useState({});
+  const [showMap, setShowMap] = useState(false);
 
   // ✅ Fetch city data from backend (rainwater.js)
   useEffect(() => {
@@ -85,23 +88,44 @@ const CalculatorForm = ({ onSubmit, loading }) => {
         🌧️ Rainwater Potential Estimator
       </h3>
 
-      {/* City Selection */}
+      {/* Location Selection with Map */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Select City
+          Location
         </label>
-        <select
-          value={formData.location}
-          onChange={(e) => handleChange("location", e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-        >
-          {cities.map((city) => (
-            <option key={city.id || city.name} value={city.name}>
-              {city.name} ({city.rainfall}mm)
-            </option>
-          ))}
-        </select>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            list="cities-list"
+            value={formData.location}
+            onChange={(e) => handleChange("location", e.target.value)}
+            placeholder="Search city or drop a pin..."
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+            required
+          />
+          <datalist id="cities-list">
+            {cities.map((city) => (
+              <option key={city.id || city.name} value={city.name} />
+            ))}
+          </datalist>
+
+          <button
+            type="button"
+            onClick={() => setShowMap(true)}
+            className="px-4 bg-sky-100 text-sky-600 hover:bg-sky-200 hover:text-sky-700 rounded-lg transition-colors flex items-center justify-center border border-sky-200"
+            title="Select from Map"
+          >
+            <MapPin className="w-5 h-5" />
+          </button>
+        </div>
       </div>
+
+      {showMap && (
+        <MapLocationPicker
+          onLocationSelected={(loc) => handleChange("location", loc)}
+          onClose={() => setShowMap(false)}
+        />
+      )}
 
       {/* Rooftop Area */}
       <div className="mb-4">

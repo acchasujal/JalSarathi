@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion"
 import {
   BarChart,
   Bar,
@@ -87,6 +88,8 @@ const ResultsDisplay = ({ assessment, loading, error, onGeneratePDF }) => {
     effectiveCost,
     demandMetPercent,
     recommendations,
+    accuracyScore,
+    dataSource,
   } = assessment
 
   /* ------------------ DATA ------------------ */
@@ -108,34 +111,175 @@ const ResultsDisplay = ({ assessment, loading, error, onGeneratePDF }) => {
     { city: "Your Site", rainfall, harvest: harvestableWater },
   ]
 
+  // ── Accuracy Tier ─────────────────────────────────────────────────────────
+  const getAccuracyTier = (score) => {
+    if (score > 90) return {
+      color: "bg-green-100 text-green-700 border-green-200",
+      barColor: "bg-green-500",
+      dotColor: "bg-green-500",
+      badgeBg: "bg-green-50 border-green-300",
+      badgeText: "text-green-800",
+      label: "Verified High Accuracy",
+      icon: "🛰️",
+      tip: "Data fetched directly from satellite-calibrated weather stations at your exact coordinates."
+    };
+    if (score >= 65) return {
+      color: "bg-yellow-100 text-yellow-700 border-yellow-200",
+      barColor: "bg-yellow-400",
+      dotColor: "bg-yellow-400",
+      badgeBg: "bg-yellow-50 border-yellow-300",
+      badgeText: "text-yellow-800",
+      label: "Standard Accuracy",
+      icon: "📡",
+      tip: "API rate limit reached or no coordinates provided. Using nearest city station data."
+    };
+    return {
+      color: "bg-red-100 text-red-700 border-red-200",
+      barColor: "bg-red-400",
+      dotColor: "bg-orange-400",
+      badgeBg: "bg-orange-50 border-orange-300",
+      badgeText: "text-orange-800",
+      label: "General Estimate",
+      icon: "📊",
+      tip: "Using city-level or state-level averages. Use the map pin for precision satellite data."
+    };
+  };
+
+  const [showTip, setShowTip] = useState(false);
+  const tier = getAccuracyTier(accuracyScore || 0);
+
+  // Animated counter for accuracy %
+  const motionScore = useMotionValue(0);
+  const springScore = useSpring(motionScore, { stiffness: 70, damping: 20 });
+  const displayScore = useTransform(springScore, (v) => Math.round(v));
+
+  useEffect(() => {
+    motionScore.set(accuracyScore || 0);
+  }, [accuracyScore, motionScore]);
+
   return (
     <motion.div
-      className="jalsarathi-card border-t-4 border-blue-500 p-6 space-y-8"
+      className="jalsarathi-card border-t-4 border-sky-500 p-6 space-y-6 bg-white rounded-2xl"
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <h3 className="text-2xl font-semibold text-blue-700 text-center">
-        🌧️ Rainwater Harvesting Results
-      </h3>
+      <div className="flex flex-col items-center gap-3">
+        <h3 className="text-2xl font-semibold text-sky-700 text-center">
+          🌧️ Rainwater Harvesting Results
+        </h3>
+
+        {/* ── Accuracy Badge ── */}
+        {accuracyScore != null && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15 }}
+            className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-semibold cursor-help ${tier.color}`}
+            onMouseEnter={() => setShowTip(true)}
+            onMouseLeave={() => setShowTip(false)}
+          >
+            <span>{tier.icon}</span>
+            <span>{tier.label}</span>
+            <span className="opacity-60">•</span>
+            <span><motion.span>{displayScore}</motion.span>% Accuracy</span>
+            <span className="underline decoration-dotted opacity-70">ⓘ</span>
+
+            <AnimatePresence>
+              {showTip && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-64 bg-gray-900 text-white text-xs rounded-xl p-3 z-50 shadow-xl pointer-events-none"
+                >
+                  {tier.tip}
+                  {dataSource && (
+                    <p className="mt-1 opacity-60 text-[10px]">Source: {dataSource}</p>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+
+        {/* Accuracy % Bar */}
+        {accuracyScore != null && (
+          <div className="w-full max-w-xs">
+            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                className={`h-full rounded-full ${tier.barColor}`}
+                initial={{ width: 0 }}
+                animate={{ width: `${accuracyScore}%` }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* ------------------ SUMMARY ------------------ */}
       <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-blue-50 rounded-xl p-4 text-center">
-          <p className="text-gray-600">Annual Rainfall</p>
-          <p className="text-2xl font-bold text-blue-600">{rainfall} mm</p>
+        <div className={`rounded-xl p-4 text-center border shadow-sm ${accuracyScore > 90 ? 'bg-sky-50 border-sky-200' : accuracyScore >= 70 ? 'bg-yellow-50 border-yellow-100' : 'bg-gray-50 border-gray-100'}`}>
+          <p className="text-gray-600 font-medium text-sm flex items-center justify-center gap-1">
+            {tier.icon} {accuracyScore > 90 ? "Hyper-Local Rainfall" : "Estimated Rainfall"}
+          </p>
+          <p className={`text-2xl font-bold mt-1 ${accuracyScore > 90 ? 'text-sky-600' : accuracyScore >= 70 ? 'text-yellow-600' : 'text-gray-600'}`}>
+            {rainfall} mm
+          </p>
+          {dataSource && (
+            <p className="text-[11px] text-gray-400 mt-1 leading-tight">
+              Source: {dataSource}
+            </p>
+          )}
         </div>
-        <div className="bg-green-50 rounded-xl p-4 text-center">
-          <p className="text-gray-600">Harvestable Water</p>
-          <p className="text-2xl font-bold text-green-600">
+        <div className="bg-green-50 border border-green-100 shadow-sm rounded-xl p-4 text-center">
+          <p className="text-gray-600 text-sm font-medium">Harvestable Water</p>
+          <p className="text-2xl font-bold text-green-600 mt-1">
             {harvestableWater.toLocaleString()} L
           </p>
         </div>
-        <div className="bg-emerald-50 rounded-xl p-4 text-center">
-          <p className="text-gray-600">Annual Savings</p>
-          <p className="text-2xl font-bold text-emerald-600">
+        <div className="bg-amber-50 border border-amber-100 shadow-sm rounded-xl p-4 text-center">
+          <p className="text-gray-600 text-sm font-medium">Annual Savings</p>
+          <p className="text-2xl font-bold text-amber-600 mt-1">
             ₹{annualSavings.toLocaleString()}
           </p>
         </div>
+      </div>
+
+      {/* ------------------ DATA RELIABILITY SECTION ------------------ */}
+      <div className="border border-gray-100 rounded-xl p-4 bg-gray-50">
+        <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5">
+          🛡️ Data Reliability
+        </h4>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          {/* Badge */}
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold ${tier.badgeBg} ${tier.badgeText}`}>
+            <span className={`w-2 h-2 rounded-full ${tier.dotColor}`} />
+            <span>{tier.icon} {tier.label}</span>
+            <span className="opacity-50">|</span>
+            <span><motion.span>{displayScore}</motion.span>%</span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden min-w-[80px]">
+            <motion.div
+              className={`h-full rounded-full ${tier.barColor}`}
+              initial={{ width: 0 }}
+              animate={{ width: `${accuracyScore || 0}%` }}
+              transition={{ delay: 0.25, duration: 0.7, ease: 'easeOut' }}
+            />
+          </div>
+
+          {/* Source */}
+          {dataSource && (
+            <p className="text-xs text-gray-500 shrink-0">
+              {dataSource}
+            </p>
+          )}
+        </div>
+
+        {/* Tip */}
+        <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">{tier.tip}</p>
       </div>
 
       {/* ------------------ CHARTS ------------------ */}
