@@ -28,7 +28,8 @@ const WaterQualityTester = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post("http://localhost:3001/api/water-quality/calculate", formData);
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+      const response = await axios.post(`${baseUrl}/api/water-quality/calculate`, formData);
       if (response.data.success) {
         setResult(response.data.data);
       } else {
@@ -167,7 +168,7 @@ const WaterQualityTester = () => {
 
             {showMap && (
               <MapLocationPicker
-                onLocationSelected={(loc) => handleInputChange({ target: { name: 'location', value: loc } })}
+                onLocationSelected={(loc) => handleInputChange({ target: { name: 'location', value: loc.label } })}
                 onClose={() => setShowMap(false)}
               />
             )}

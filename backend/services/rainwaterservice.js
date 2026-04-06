@@ -35,9 +35,11 @@ const runoffCoefficients = {
 };
 
 // --- Water cost (₹ per liter) by region type ---
+// Note: These rates reflect the "Avoided Cost" of commercial tankers (approx ₹800/10k L)
+// rather than subsidized municipal rates, providing a more realistic ROI for RWH.
 const waterCosts = {
-  urban: 0.05,
-  rural: 0.03,
+  urban: 0.08,
+  rural: 0.04,
 };
 
 /**

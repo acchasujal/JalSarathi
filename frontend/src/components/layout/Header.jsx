@@ -9,7 +9,6 @@ const Header = () => {
 
   const navLinks = [
     { path: "/", label: "Water Calculator", icon: <Calculator className="w-4 h-4" /> },
-    { path: "/admin", label: "Admin Dashboard", icon: <LayoutDashboard className="w-4 h-4" /> },
   ];
 
   return (
