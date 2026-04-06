@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import RainwaterCalculator from "../components/rwh/RainwaterCalculator";
 import WaterQualityTester from "../components/water-quality/WaterQualityTester";
@@ -120,12 +121,12 @@ const HomePage = () => {
         <p className="text-blue-50 mb-6">
           Adopt sustainable practices and make every drop count with JalSarathi.
         </p>
-        <a
-          href="/vendors"
+        <Link
+          to="/vendors"
           className="inline-block bg-white text-blue-700 font-medium px-6 py-3 rounded-xl shadow hover:bg-blue-50 transition"
         >
           Explore Vendors
-        </a>
+        </Link>
       </motion.section>
     </div>
   );
