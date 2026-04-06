@@ -12,7 +12,11 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(rateLimit({ windowMs: 60 * 1000, max: 100 }));
 
 // Initialize SQLite DB and tables
