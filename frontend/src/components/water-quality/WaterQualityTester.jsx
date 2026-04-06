@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import MapLocationPicker from "../common/MapLocationPicker";
+import { calculateWaterQuality } from "../../services/api";
 
 const WaterQualityTester = () => {
   const [formData, setFormData] = useState({
@@ -28,12 +29,11 @@ const WaterQualityTester = () => {
     setLoading(true);
     setError(null);
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
-      const response = await axios.post(`${baseUrl}/api/water-quality/calculate`, formData);
-      if (response.data.success) {
-        setResult(response.data.data);
+      const response = await calculateWaterQuality(formData);
+      if (response.success) {
+        setResult(response.data);
       } else {
-        setError(response.data.error || "Failed to calculate HPI.");
+        setError(response.error || "Failed to calculate HPI.");
       }
     } catch (err) {
       setError(err.response?.data?.error || "Error connecting to server. Is backend running?");

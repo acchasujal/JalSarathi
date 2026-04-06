@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Droplet, Menu, X, LayoutDashboard, Calculator } from "lucide-react";
+import { Droplet, Menu, X, LayoutDashboard, Calculator, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import GuidedTour from "../common/GuidedTour";
 
 const Header = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
 
   const navLinks = [
     { path: "/", label: "Water Calculator", icon: <Calculator className="w-4 h-4" /> },
@@ -47,6 +49,15 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Guide Me Button */}
+            <button
+              onClick={() => setTourOpen(true)}
+              className="ml-4 flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl font-medium shadow-md shadow-sky-100 hover:bg-sky-700 transition-all active:scale-95"
+            >
+              <Sparkles className="w-4 h-4" />
+              Guide Me
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -88,6 +99,10 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <GuidedTour 
+        isOpen={tourOpen} 
+        onClose={() => setTourOpen(false)} 
+      />
     </motion.header>
   );
 };

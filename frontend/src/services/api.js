@@ -37,6 +37,17 @@ export const generatePDF = async (assessmentData) => {
   return res.data;
 };
 
+// Water Quality APIs
+
+/**
+ * POST water quality calculation (HPI)
+ * @param {Object} payload - { location, lead, arsenic, mercury }
+ */
+export const calculateWaterQuality = async (payload) => {
+  const res = await api.post("/api/water-quality/calculate", payload);
+  return res.data;
+};
+
 //Admin APIs (future-safe)
 
 export const getAdminStats = async () => {
